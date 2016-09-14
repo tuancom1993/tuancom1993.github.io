@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Format HTML</title>
+	<style>
+		.flex-box{
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+		}
+		.title{
+			text-align: center;
+		}
+
+		article{
+			width: 900px;
+			margin: 30px auto;
+		}
+
+		section{
+			margin: 20px 0;
+		}
+
+		section div{
+			width: 250px;
+			margin-right: 50px;
+		}
+
+		section textarea{
+			width: 600px;
+			height: 300px;
+			border-radius: 5px;
+			font-family: Arial;
+			padding: 10px;
+			box-shadow: 0 0 5px rgba(0,0,0,0.5);
+		}
+
+		section textarea .area-html{
+			height: 900px;
+		}
+
+		.sec-btn .btn-gen{
+			display: block;
+			padding: 10px 20px;
+		}
+
+		aside{
+			width: 100%;
+			border-top: 2px solid black;
+		}
+
+		#content-test{
+			width: 80%;
+			padding: 20px;
+			border: 1px solid black;
+			margin: 50px auto;
+		}
+
+
+	</style>
+</head>
+<body>
+	<h1 class="title">Format HTML to String </h1>
+		<article>
+			<section class="sec-htmlcode flex-box">
+				<div>
+					<p>Step 1:  Enter your HTML code: </p>
+					<p>Press [Ctrl+B] to append variable </p>
+				</div>
+				<textarea id="area-html"></textarea>	
+			</section>
+			
+
+			<section class="sec-btn flex-box">
+				<div>
+					<p>Step 2:  Click into the button: </p>
+				</div>
+				<button class="btn-gen" type="button" onclick="exeFunction()"> Gen </button>
+			</section>
+			
+
+			<section class="sec-text flex-box">
+				<div>
+					<p>Step 3:  Get your string: </p>
+				</div>
+					<textarea id="area-text"></textarea>
+			</section>
+
+		
+			<section class="sec-btn flex-box" style="margin-top: 50px;">
+				<div>
+					<p>Step 4:  Click button to test the String: </p>
+				</div>
+				<button class="btn-gen" type="button" onclick="textFunction()"> Test </button>
+			</section>
+
+	</article>
+
+	<aside class="test-zone">
+		<h2>Test Zone</h2>
+		<div id="content-test"></div>
+	</aside>
+</body>
+<script type="text/javascript">
+	function exeFunction(){
+		var htmlCode = document.getElementById("area-html").value;
+		var text = changeFormat(htmlCode);
+		document.getElementById("area-text").value = text;
+	}
+
+
+	function textFunction(){
+		var htmlCode = document.getElementById("area-text").value;
+		document.getElementById("content-test").innerHTML = htmlCode;
+	}
+
+	function changeFormat(htmlCode){
+		var text = htmlCode;
+		text = replaceAll(text,"\n|\t", " ");
+		text = replaceAll(text, "\"", "\'")
+		text = text.replace(/  +/g, ' ');
+		text = replaceAll(text, "@var@", "\"\+  \+\"");
+		text = "\""+text+ "\"";
+		return text;
+	}
+
+	function replaceAll(str, find, replace) {
+  		return str.replace(new RegExp(find, 'g'), replace);
+	}
+
+	document.getElementById("area-html").onkeydown = function(e){
+		if((e.which == 66)&&(e.ctrlKey)){
+			insertAtCursor(document.getElementById("area-html"), " @var@ ");
+			return false;
+		}
+	}
+
+	function insertAtCursor(myField, myValue) {
+    //IE support
+    if (document.selection) {
+        myField.focus();
+        sel = document.selection.createRange();
+        sel.text = myValue;
+    }
+    //MOZILLA and others
+    else if (myField.selectionStart || myField.selectionStart == '0') {
+        var startPos = myField.selectionStart;
+        var endPos = myField.selectionEnd;
+        myField.value = myField.value.substring(0, startPos)
+            + myValue
+            + myField.value.substring(endPos, myField.value.length);
+    } else {
+        myField.value += myValue;
+    }
+
+
+}
+</script>
+</html>
+
