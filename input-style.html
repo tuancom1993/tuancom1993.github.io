@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Input Style</title>
+	<!-- <link rel="stylesheet" href="css.css"> -->
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		body{
+			text-align: center;
+			padding-top: 200px;
+		}
+
+		.btn{
+			display: inline-block;
+			background-color: rgba(0,0,0,0.2);
+			border: none;
+			border-radius: none;
+			font-size: 13px;
+			padding: 8px 20px;
+			outline: none;	
+			/* margin: 100px 10px 0 100px; */
+			position: relative;
+			overflow: hidden;
+			-webkit-transition: background-color 0.3s;
+			-o-transition: background-color 0.3s;
+			transition: background-color 0.3s;
+		}
+
+		.btn:before{
+			display: block;
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: 0px;
+			margin-top: 0px;
+			width: 0;
+			height: 0;
+			border-radius: 100%;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			background-color: rgba(50,50,50,0.7);
+			background-clip: content-box;
+			-webkit-transition: all 0.3s;
+			-o-transition: all 0.3s;
+			transition: all 0.3s;
+		}
+
+		.btn:active{
+			outline: none;
+			-webkit-transform: scale(0.95);
+			-ms-transform: scale(0.95);
+			-o-transform: scale(0.95);
+			transform: scale(0.95);
+			-webkit-transition: all 0s;
+			-o-transition: all 0s;
+			transition: all 0s;
+
+		}
+
+		/* .btn:focus:before{
+			-webkit-animation: toa 0.5s;
+			-o-animation: toa 0.5s;
+			animation: toa 0.5s;
+		} */
+		.btn:hover{
+			background-color: rgba(0,0,0,0.17);
+			-webkit-animation:  nhapnhay 2s infinite ;
+			-o-animation:  nhapnhay 2s infinite ;
+			animation:  nhapnhay 2s infinite ; 
+		}
+		.btn:hover:before{
+			/* width: 100px;
+			height: 100px;
+			margin-top: -50px;
+			margin-left: -50px; */
+			-webkit-animation: toa 0.5s;
+			-o-animation: toa 0.5s;
+			animation: toa 0.5s;
+		}
+
+		@-webkit-keyframes toa {
+			0% { width: 0px; height: 0px; margin-top: 0; margin-left: 0;}
+			100% {width: 100px; height: 100px; margin-top: -50px; margin-left: -50px; background-color: rgba(0,0,0,0)}
+			/* 100% { width: 0px; height: 0px; margin-top: 0; margin-left: 0; } */
+		}
+		@-o-keyframes toa {
+			0% { width: 0px; height: 0px; margin-top: 0; margin-left: 0;}
+			100% {width: 100px; height: 100px; margin-top: -50px; margin-left: -50px; background-color: rgba(0,0,0,0)}
+			/* 100% { width: 0px; height: 0px; margin-top: 0; margin-left: 0; } */
+		}
+		@-moz-keyframes toa {
+			0% { width: 0px; height: 0px; margin-top: 0; margin-left: 0;}
+			100% {width: 100px; height: 100px; margin-top: -50px; margin-left: -50px; background-color: rgba(0,0,0,0)}
+			/* 100% { width: 0px; height: 0px; margin-top: 0; margin-left: 0; } */
+		}
+		@keyframes toa {
+			0% { width: 0px; height: 0px; margin-top: 0; margin-left: 0;}
+			100% {width: 100px; height: 100px; margin-top: -50px; margin-left: -50px; background-color: rgba(0,0,0,0)}
+			/* 100% { width: 0px; height: 0px; margin-top: 0; margin-left: 0; } */
+		}
+
+		@-webkit-keyframes nhapnhay {
+			0% { background-color: rgba(0,0,0,0.17); }
+			50% { background-color: rgba(0,0,0,0.27); }
+			100% { background-color: rgba(0,0,0,0.17); }
+		}
+		@-o-keyframes nhapnhay {
+			0% { background-color: rgba(0,0,0,0.17); }
+			50% { background-color: rgba(0,0,0,0.27); }
+			100% { background-color: rgba(0,0,0,0.17); }
+		}
+		@-moz-keyframes nhapnhay {
+			0% { background-color: rgba(0,0,0,0.17); }
+			50% { background-color: rgba(0,0,0,0.27); }
+			100% { background-color: rgba(0,0,0,0.17); }
+		}
+		@keyframes nhapnhay {
+			0% { background-color: rgba(0,0,0,0.17); }
+			50% { background-color: rgba(0,0,0,0.27); }
+			100% { background-color: rgba(0,0,0,0.17); }
+		}
+
+		/**********************************************************************************************/
+
+		.wrap-input-rc-style{
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			box-sizing: border-box;
+			vertical-align: -4px;
+			margin-top: 5px;
+			margin-right: 5px;
+		}
+
+		.wrap-input-rc-style input{
+			display: none;
+		}
+
+		.wrap-input-rc-style label:hover{
+			cursor: pointer;
+		}
+
+
+		.wrap-input-rc-style input[type="radio"] ~ label{
+			display: block;
+			width: 100%;
+			height: 100%;
+			border: 2px solid rgba(0,0,0,0.5);
+			border-radius: 100%;
+			padding: 33%;
+			background: rgba(0,0,0,0);
+			box-sizing: border-box;
+			background-clip: content-box;
+			-webkit-transition: all 0.2s;
+			-o-transition: all 0.2s;
+			transition: all 0.2s;
+		}
+
+		.wrap-input-rc-style input[type="radio"]:checked ~ label{
+			padding: 10%;
+			background: rgba(0,0,0,0.5);
+			background-clip: content-box;
+			-webkit-transform: rotateY(180deg);
+			-ms-transform: rotateY(180deg);
+			-o-transform: rotateY(180deg);
+			transform: rotateY(180deg);
+		}
+
+		/*checkbox*/
+		.wrap-input-rc-style input[type="checkbox"] ~ label{
+			display: block;
+			width: 100%;
+			height: 100%;
+			border: 2px solid rgba(0,0,0,0.5);
+			border-radius: 3px;
+			padding: 33%;
+			background: rgba(0,0,0,0);
+			box-sizing: border-box;
+			background-clip: content-box;
+			-webkit-transition: all 0.5s;
+			-o-transition: all 0.5s;
+			transition: all 0.5s;
+			position: relative;
+			-webkit-transform: rotate(-180deg);
+			-ms-transform: rotate(-180deg);
+			-o-transform: rotate(-180deg);
+			transform: rotate(-180deg);
+		}
+
+		.wrap-input-rc-style input[type="checkbox"] ~ label:after{
+			width: 6px;
+			height: 11px;
+			content: "";
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -3px;
+			margin-top: -7px;
+			background: transparent;
+			border: none;
+			box-sizing: border-box;
+			-webkit-transition: opacity 0.5s;
+			-o-transition: opacity 0.5s;
+			transition: opacity 0.5s;
+			opacity: 0;
+			-webkit-transform: rotate(45deg);
+			-ms-transform: rotate(45deg);
+			-o-transform: rotate(45deg);
+			transform: rotate(45deg);
+		}
+
+		.wrap-input-rc-style input[type="checkbox"]:checked ~ label{
+			padding: 1px;
+			background: rgba(0,0,0,0.5);
+		 	border-color: rgba(0,0,0,0.5);
+			background-clip: content-box;
+			-webkit-transform: rotate(0deg);
+			-ms-transform: rotate(0deg);
+			-o-transform: rotate(0deg);
+			transform: rotate(0deg);
+			
+		}
+
+		.wrap-input-rc-style input[type="checkbox"]:checked ~ label:after{
+			opacity: 1;
+			width: 6px;
+			height: 11px;
+			border-right: 2px solid white;
+			border-bottom: 2px solid white;
+		}
+
+
+		.wrap-input-rc-style input ~ label:before{
+			display: block;
+			content: "";
+			position: absolute;
+			width: 0;
+			height: 0;
+			border-radius: 100%;
+			top: 50%;
+			left: 50%;
+			margin-top: 0;
+			margin-left: 0;
+			background-color: rgba(50,50,50,0.5);
+			-webkit-transition: all 0.2s;
+			-o-transition: all 0.2s;
+			transition: all 0.2s;
+			
+		}
+
+		.wrap-input-rc-style input[type='checkbox'] ~ label:before{
+			-webkit-animation: ani-checkbox-radio2 0.3s;
+			-o-animation: ani-checkbox-radio2 0.3s;
+			animation: ani-checkbox-radio2 0.3s;
+		}
+
+
+		.wrap-input-rc-style input:checked ~ label:before{
+			-webkit-animation: ani-checkbox-radio 0.3s;
+			-o-animation: ani-checkbox-radio 0.3s;
+			animation: ani-checkbox-radio 0.3s;
+		}
+
+		@-webkit-keyframes ani-checkbox-radio {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 50px; height: 50px; margin-top: -25px; margin-left: -25px; background-color: rgba(50,50,50,0.1)}
+		}
+		@-o-keyframes ani-checkbox-radio {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 50px; height: 50px; margin-top: -25px; margin-left: -25px; background-color: rgba(50,50,50,0.1)}
+		}
+		@-moz-keyframes ani-checkbox-radio {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 50px; height: 50px; margin-top: -25px; margin-left: -25px; background-color: rgba(50,50,50,0.1)}
+		}
+		@keyframes ani-checkbox-radio {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 50px; height: 50px; margin-top: -25px; margin-left: -25px; background-color: rgba(50,50,50,0.1)}
+		}
+
+		@-webkit-keyframes ani-checkbox-radio2 {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 50px; height: 50px; margin-top: -25px; margin-left: -25px; background-color: rgba(50,50,50,0.1)}
+		}
+		@-o-keyframes ani-checkbox-radio2 {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 50px; height: 50px; margin-top: -25px; margin-left: -25px; background-color: rgba(50,50,50,0.1)}
+		}
+		@-moz-keyframes ani-checkbox-radio2{
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 50px; height: 50px; margin-top: -25px; margin-left: -25px; background-color: rgba(50,50,50,0.1)}
+		}
+		@keyframes ani-checkbox-radio2 {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 50px; height: 50px; margin-top: -25px; margin-left: -25px; background-color: rgba(50,50,50,0.1)}
+		}
+
+
+		/*******************************************************************************/
+		div.wrap-input-style{
+			display: inline-block;
+			position: relative;
+			padding: 15px 0;
+			width: 200px;
+		}
+
+		div.wrap-input-style input{
+			padding: 0 2px;
+			border: none;
+			border-bottom: 1px solid rgba(0,0,0,0.3);
+			-webkit-transition: all 1s;
+			-o-transition: all 1s;
+			transition: all 1s;
+			background: rgba(0,0,0,0);
+			width: 100%;
+		}
+
+		div.wrap-input-style input:invalid{
+			box-shadow: none;
+		}
+
+
+		div.wrap-input-style input:valid{
+			border-color: green;
+		}
+
+		div.wrap-input-style input:focus{
+			outline: none;
+			border-color:  #f44336;
+		}
+
+
+		div.wrap-input-style span{
+			position: absolute;
+			-webkit-transition: all 0.4s;
+			-o-transition: all 0.4s;
+			transition: all 0.4s;
+			top: 15px;
+			left: 2px;
+			font-size: 15px;
+			color: rgba(0,0,0,0.8);
+			z-index: -1;
+		}
+
+		div.wrap-input-style input:valid ~ span{
+			top: 0;
+			left: 2px;
+			font-size: 12px;
+			color: green;
+			margin-top: 0;
+			z-index: 1;
+		}
+
+		div.wrap-input-style input:focus ~ span{
+			top: 0;
+			left: 2px;
+			font-size: 12px;
+			color:  #f44336;
+			margin-top: 0;
+			z-index: 1;
+		}
+
+		/*******************************************Toggle button*****************************/
+		div.toggle-button{
+			display: inline-block;
+			width: 35px;
+			height: 15px;
+			margin: 0 10px;
+		}
+
+		div.toggle-button > input[type='checkbox']{
+			display: none;
+		}
+
+		div.toggle-button > label{
+			display: block;
+			width: 100%;
+			height: 100%;
+			border-radius: 10px;
+			background-color: rgba(0,0,0,0.2);
+			position: relative;
+			-webkit-transition: all 0.3s;
+			-o-transition: all 0.3s;
+			transition: all 0.3s;
+		}
+
+		div.toggle-button > label:before{
+			position: absolute;
+			display: block;
+			content: '';
+			width: 20px;
+			height: 20px;
+			border-radius: 100%;
+			left: -3px;
+			top: 50%;
+			margin-top: -10px;
+			background-color: #989898;
+			box-shadow: 0 0 1px 1px rgba(0,0,0,0.3);
+			-webkit-transition: all 0.3s;
+			-o-transition: all 0.3s;
+			transition: all 0.3s;
+		}
+
+		div.toggle-button > label:after{
+			position: absolute;
+			display: block;
+			content: '';
+			width: 0px;
+			height: 0px;
+			top: 50%;
+			left: 7px;
+			margin-left: 0;
+			margin-top: 0;
+			border-radius: 100%;
+			background-color: rgba(0,0,0,0.7);
+		}
+
+		div.toggle-button > input[type='checkbox']:checked ~ label{
+			background-color: rgba(67, 160, 71, 0.4);
+			-webkit-transition: all 0.3s 0.3s;
+			-o-transition: all 0.3s 0.3s;
+			transition: all 0.3s 0.3s;
+		}
+
+		div.toggle-button > input[type='checkbox']:checked ~ label:before{
+			background-color: rgba(67, 160, 71, 1.9);
+			left: 100%;
+			margin-left: -17px;	
+			-webkit-transition: all 0.3s 0.3s;
+			-o-transition: all 0.3s 0.3s;
+			transition: all 0.3s 0.3s;
+		}
+
+		div.toggle-button > input[type='checkbox']:checked ~ label:after{
+			-webkit-animation: ani-toggle 0.3s;
+			-o-animation: ani-toggle 0.3s;
+			animation: ani-toggle 0.3s;
+		}
+
+		@-webkit-keyframes ani-toggle {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 40px; height: 40px; background-color: rgba(0,0,0,0.1); margin-top: -20px; margin-left: -20px}
+		}
+		@-o-keyframes ani-toggle {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 40px; height: 40px; background-color: rgba(0,0,0,0.1); margin-top: -20px; margin-left: -20px}
+		}
+		@-moz-keyframes ani-toggle {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 40px; height: 40px; background-color: rgba(0,0,0,0.1); margin-top: -20px; margin-left: -20px}
+		}
+		@keyframes ani-toggle {
+			0% { width: 0; height: 0; margin-top: 0; margin-left: 0; }
+			100% { width: 40px; height: 40px; background-color: rgba(0,0,0,0.1); margin-top: -20px; margin-left: -20px}
+		}
+		
+		/*********************************************Range Radio***************************/
+		div.wrap-range-radio{
+		 	display: inline-block;
+		 	/* display: -webkit-flex;
+		 	display: -moz-flex;
+		 	display: -ms-flex;
+		 	display: -o-flex;
+		 	display: flex;
+		 	justify-content: space-around;
+		 	align-items: center; */
+			position: relative;
+			/* width: 30%; */
+			margin: 0 10px;
+		}
+
+		div.wrap-range-radio:before{
+			display: block;
+			position: absolute;
+			content: "";
+			width: 100%;
+			height: 4px;
+			border: 1px solid rgba(0,0,0,0.3);
+			top: 50%;
+			left: 0;
+			margin-top: -3px;
+			boz-sizing: border-box;
+			border-radius: 5px;
+			box-shadow: 0 0 2px rgba(0,0,0,0.5) inset;
+			background-color: rgba(0,0,0,0.1);
+			z-index: -1;
+		}
+
+		div.wrap-range-radio:after{
+			display: block;
+			position: absolute;
+			content: "";
+			width: 0%;
+			height: 2px;
+			top: 50%;
+			left: 0;
+			margin-top: -1px;
+			boz-sizing: border-box;
+			/*background-color: rgba(33, 150, 243, 0.6);*/
+			z-index: -1;
+			/*-webkit-animation: move 1s forwards;
+			-o-animation: move 1s forwards;
+			animation: move 1s forwards;*/
+		}
+
+		@-webkit-keyframes move {
+			from { width: 0; }
+			to { width: 80%; }
+		}
+		@-o-keyframes move {
+			from { width: 0; }
+			to { width: 80%; }
+		}
+		@-moz-keyframes move {
+			from { width: 0; }
+			to { width: 80%; }
+		}
+		@keyframes move {
+			from { width: 0; }
+			to { width: 80%; }
+		}
+
+		div.wrap-range-radio > div.wrap-input-rc-style{
+			margin: 0 10px;
+			background-color: white;
+			position: relative;
+			border-radius: 100%;
+		}
+
+		div.wrap-range-radio > div.wrap-input-rc-style:first-child{
+			margin-left: 0px;
+		}
+
+		div.wrap-range-radio > div.wrap-input-rc-style:last-child{
+			margin-right: -2px;
+		}
+
+		div.wrap-range-radio > div.wrap-input-rc-style > span.content-radio{
+			width: 200px;
+			position: absolute;
+			text-align: center;
+			top: -20px;
+			left: 50%;
+			margin-left: -100px;
+			opacity: 0.7;
+		}
+
+		div.wrap-range-radio > div.wrap-input-rc-style > input[type='radio']:checked ~ label{
+			background-color: rgba(33, 150, 243, 0.6);
+			border-color: rgba(33, 150, 243, 0.7);
+		}
+
+		div.wrap-range-radio > div.wrap-input-rc-style > input[type='radio']:checked ~ span.content-radio{
+			color: rgba(33, 150, 243, 1.0);
+			opacity: 1;
+		}
+
+		div.wrap-range-radio > div.wrap-input-rc-style > label:hover ~ span.content-radio{
+			opacity: 1;
+		}
+
+	</style>
+</head>
+<body>
+	<button class="btn btn-style"> Button </button>
+
+	<div class="toggle-button">
+		<input id="toggle" type="checkbox">
+		<label for="toggle"></label>
+	</div>
+
+	<div class="wrap-input-rc-style">
+		<input id="input" type="checkbox">
+		<label for="input"></label>
+	</div>
+	<div class="wrap-input-rc-style">
+		<input id="input2" type="checkbox">
+		<label for="input2"></label>
+	</div>
+	<div class="wrap-input-rc-style">
+		<input id="input3" type="checkbox">
+		<label for="input3"></label>
+	</div>
+
+	<div class="wrap-input-rc-style">
+		<input id="input4" name="abc" type="radio">
+		<label for="input4"></label>
+	</div>
+	<div class="wrap-input-rc-style">
+		<input id="input5" name="abc" type="radio">
+		<label for="input5"></label>
+	</div>
+	<div class="wrap-input-rc-style">
+		<input id="input6" name="abc" type="radio">
+		<label for="input6"></label>
+	</div>
+
+	<div class="wrap-input-style">
+		<input type="text" required>
+		<span> Phone Number </span>
+	</div>
+	
+	<div class="wrap-range-radio">
+		<div class="wrap-input-rc-style">
+			<input id="input7" name="range" type="radio">
+			<label for="input7"></label>
+			<span class="content-radio"> 1 </span>
+		</div>
+		<div class="wrap-input-rc-style">
+			<input id="input8" name="range" type="radio">
+			<label for="input8"></label>
+			<span class="content-radio"> 2 </span>
+		</div>
+		<div class="wrap-input-rc-style">
+			<input id="input9" name="range" type="radio">
+			<label for="input9"></label>
+			<span class="content-radio"> 3 </span>
+		</div>
+		<div class="wrap-input-rc-style">
+			<input id="input10" name="range" type="radio">
+			<label for="input10"></label>
+			<span class="content-radio"> 4 </span>
+		</div>
+		<div class="wrap-input-rc-style">
+			<input id="input11" name="range" type="radio">
+			<label for="input11"></label>
+			<span class="content-radio"> 5 </span>
+		</div>
+		<div class="wrap-input-rc-style">
+			<input id="input12" name="range" type="radio">
+			<label for="input12"></label>
+			<span class="content-radio"> 6 </span>
+		</div>
+		<div class="wrap-input-rc-style">
+			<input id="input13" name="range" type="radio">
+			<label for="input13"></label>
+			<span class="content-radio"> 7 </span>
+		</div>
+	</div>
+
+</body>
+</html>
