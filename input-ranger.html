@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="test.css">
+</head>
+	<style> 
+	
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		.wrap-range {
+			display: inline-block;
+			width: 200px;
+			height: 30px;
+			margin: 100px;
+		}
+
+		.wrap-range > .range {
+			width: 100%;
+			height: 100%;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+		}
+
+		.wrap-range > .range:focus{
+			outline: none;
+			-moz-outline: none;
+		}
+
+		.wrap-range > .range::-webkit-slider-runnable-track {
+			width: 100%;
+			height: 3px;
+			background-color: rgba(0,0,0,0.2);
+			border-radius: 2px;
+			-webkit-transition: all 0.3s;
+			-o-transition: all 0.3s;
+			transition: all 0.3s;
+		}
+
+		.wrap-range > .range::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			border: none;
+			width: 18px;
+			height: 18px;
+			border-radius: 100%;
+			margin-top: -8px;
+			-webkit-transition: all 0.3s;
+			-o-transition: all 0.3s;
+			transition: all 0.3s;
+			background-image: -webkit-linear-gradient(#EBEBEB, #C7C7C7);
+			background-image: -o-linear-gradient(#EBEBEB, #C7C7C7);
+			background-image: linear-gradient(#EBEBEB, #C7C7C7);
+			position: relative;
+		}
+
+		.wrap-range > .range::-webkit-slider-thumb:hover{
+			-webkit-transform: scale(1.1);
+			-ms-transform: scale(1.1);
+			-o-transform: scale(1.1);
+			transform: scale(1.1);
+			box-shadow: 0 0 10px #555555;
+		}
+
+		.wrap-range > .range::-webkit-slider-thumb:active {
+			background-image: -webkit-linear-gradient(#C7C7C7, #EBEBEB);
+			background-image: -o-linear-gradient(#C7C7C7, #EBEBEB);
+			background-image: linear-gradient(#C7C7C7, #EBEBEB);
+			-webkit-transform: scale(1.1);
+			-ms-transform: scale(1.1);
+			-o-transform: scale(1.1);
+			transform: scale(1.1);
+			box-shadow: 0 0 10px #555555;
+			-webkit-transform: rotateY(180deg);
+			-ms-transform: rotateY(180deg);
+			-o-transform: rotateY(180deg);
+			transform: rotateY(180deg);
+		}
+
+		.wrap-range > .range::-webkit-slider-runnable-track:active {
+			background-color: rgba(0,0,0,0.3);
+		}
+
+		.wrap-range > .range::-webkit-slider-thumb:before{
+			display: block;
+			width: 50px;
+			height: 40px;
+			top: 0;
+			left: 0;
+			background: black;
+		}
+
+		/******************************************cross for fifox************************/
+		.wrap-range > .range::-moz-range-track {
+			width: 100%;
+			height: 3px;
+			background-color: rgba(0,0,0,0.2);
+			border-radius: 2px;
+		}
+
+		.wrap-range > .range::-moz-range-thumb {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			border: none;
+			width: 18px;
+			height: 18px;
+			border-radius: 100%;
+			margin-top: -8px;
+			-webkit-transition: all 0.3s;
+			-o-transition: all 0.3s;
+			transition: all 0.3s;
+			background-image: -webkit-linear-gradient(#EBEBEB, #C7C7C7);
+			background-image: -o-linear-gradient(#EBEBEB, #C7C7C7);
+			background-image: linear-gradient(#EBEBEB, #C7C7C7);
+		}
+
+		.wrap-range > .range::-moz-range-thumb:hover{
+			-webkit-transform: scale(1.1);
+			-ms-transform: scale(1.1);
+			-o-transform: scale(1.1);
+			transform: scale(1.1);
+			box-shadow: 0 0 5px #555555;
+		}
+
+		.wrap-range > .range::-moz-range-thumb:active {
+			background-image: -webkit-linear-gradient(#C7C7C7, #EBEBEB);
+			background-image: -o-linear-gradient(#C7C7C7, #EBEBEB);
+			background-image: linear-gradient(#C7C7C7, #EBEBEB);
+			-webkit-transform: scale(1.1);
+			-ms-transform: scale(1.1);
+			-o-transform: scale(1.1);
+			transform: scale(1.1);
+			box-shadow: 0 0 5px #555555;
+		}
+	</style>
+<body>
+	<div class="wrap-range">
+		<input type="range" class="range" min="0" max="10" value="1">
+	</div>
+</body>
+</html>
