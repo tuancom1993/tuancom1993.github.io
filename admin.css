@@ -57,9 +57,10 @@ header.header{
 }
 
 .header .wrap-navigation ul.nav li:active{
-	/*background-color: #bbb;*/
 	box-shadow: 0 5px 5px rgba(0,0,0,0.3) inset;
 	background-color: #039BE5;
+
+	/*box-shadow: 0 -5px 15px rgba(0,0,0,0.3);*/
 }
 
 .header .wrap-navigation ul.nav li:hover a{
@@ -264,4 +265,54 @@ section.wrap-menu-article div.wrap-article{
 	line-height: 30px;
 	padding: 20px 3%;
 	overflow-y: scroll;
+}
+
+.tooltip-inline{
+	position: relative;
+}
+
+.tooltip-inline:before{
+	position: absolute;
+	padding: 7px 10px;
+	border-radius: 2px;
+	top: -35px;
+	font-size: 11px;
+	color: white;
+	line-height: 16px;
+	content: attr(data-tooltip);
+	display: inline-block;
+	white-space: nowrap;
+	background-color: #999;
+	box-shadow:0 5px 5px -3px rgba(0,0,0,0.3), 0 10px 10px -5px rgba(0,0,0,0.3);
+	z-index: 999;
+}
+
+.tooltip-inline:after{
+	box-sizing: content-box;
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: -6px;
+	left: 5px;
+	content: '';
+	display: block;
+	border: none;
+	border: 8px solid transparent;
+	border-top: 8px solid #999;
+}
+
+.tooltip-inline:after, .tooltip-inline:before{
+	transform: translateY(-20px);
+	opacity: 0;
+	visibility: hidden;
+	z-index: 999;
+}
+
+.tooltip-inline:hover:before, .tooltip-inline:hover:after{
+	-webkit-transition: visibility 0ms, opacity 0.5s, transform 0.5s;
+	-o-transition: visibility 0ms, opacity 0.5s, transform 0.5s;
+	transition: visibility 0ms, opacity 0.5s, transform 0.5s;
+	visibility: visible;
+	opacity: 1;
+	transform: translateY(0);
 }
