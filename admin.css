@@ -282,9 +282,9 @@ section.wrap-menu-article div.wrap-menu ul.menu > li > a:hover{
 section.wrap-menu-article div.wrap-menu ul.menu li ul.sub-menu {
 	max-height: 0;
 	overflow: hidden;
-	-webkit-transition: all 0.5s;
-	-o-transition: all 0.5s;
-	transition: all 0.5s;
+	-webkit-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
 	list-style: disc;
 	padding-left: 20px;
 }
