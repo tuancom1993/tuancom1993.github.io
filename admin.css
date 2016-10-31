@@ -226,8 +226,8 @@ section.wrap-menu-article div.wrap-menu h3.title-menu{
 
 section.wrap-menu-article div.wrap-menu ul.menu{
 	margin-top: 10px;
-	/*overflow-y: scroll;
-	height: 80vh;*/
+	overflow-y: auto;
+	height: calc(100vh - 70px);
 }
 
 section.wrap-menu-article div.wrap-menu ul.menu > li{
@@ -236,26 +236,86 @@ section.wrap-menu-article div.wrap-menu ul.menu > li{
 
 section.wrap-menu-article div.wrap-menu ul.menu > li > a{
 	font-size: 12px;
-	line-height: 30px;
 	display: block;
-	padding: 5px 10px;
+	padding: 6px 10px;
 	color: #aaa;
 	border-radius: 2px;
-	-webkit-transition: all 0.3s;
-	-o-transition: all 0.3s;
-	transition: all 0.3s;
+	-webkit-transition: color 0.3s, background 0.3s;
+	-o-transition: color 0.3s, background 0.3s;
+	transition: color 0.3s, background 0.3s;
 }
 
 section.wrap-menu-article div.wrap-menu ul.menu > li > a:hover{
 	background-color: #03A9F4;
-	color: white;
-	box-shadow: 0 12px 20px -10px rgba(0,0,0,0.1), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(0,0,0,0.3);
-}
-.menu-active{
-	background-color: #03A9F4;
 	color: white !important;
 	box-shadow: 0 12px 20px -10px rgba(0,0,0,0.1), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(0,0,0,0.3);
 }
+
+/*.menu-active{
+	background-color: #03A9F4;
+	color: white !important;
+	box-shadow: 0 12px 20px -10px rgba(0,0,0,0.1), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(0,0,0,0.3);
+}*/
+
+.menu-active{
+	box-sizing: content-box;
+	color: #03A9F4 !important;
+	border-radius: 0px !important;
+	border: none;
+	border-left: 2px solid #03A9F4;
+	-webkit-transition: border 0ms;
+	-o-transition: border 0ms;
+	transition: border 0ms;
+}
+
+.has-sub-menu{
+	background: url("images/icons/add-black.svg") right center no-repeat;
+	background-size: 15px 15px;
+}
+
+
+section.wrap-menu-article div.wrap-menu ul.menu li ul.sub-menu {
+	max-height: 0;
+	overflow: hidden;
+	-webkit-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+	list-style: circle;
+}
+
+section.wrap-menu-article div.wrap-menu ul.menu li ul.sub-menu li {
+	list-style-type: circle;
+}
+
+section.wrap-menu-article div.wrap-menu ul.menu li ul.sub-menu li a {
+	font-size: 11px;
+	color: #aaa;
+	padding: 3px 0 3px 20px;
+	display: block;
+}
+
+section.wrap-menu-article div.wrap-menu ul.menu li ul.sub-menu li a:hover{
+	color: black;
+}
+
+
+section.wrap-menu-article div.wrap-menu ul.menu > li > a:hover ~ ul.sub-menu{
+	max-height: 200px;
+}
+
+
+section.wrap-menu-article div.wrap-menu ul.menu > li > a.menu-active ~ ul.sub-menu{
+	max-height: 200px;
+}
+
+section.wrap-menu-article div.wrap-menu ul.menu > li > a ~ ul.sub-menu:hover{
+	max-height: 200px;
+}
+
+.sub-menu-active{
+	color: black !important;
+}
+
 
 section.wrap-menu-article div.wrap-article{
 	display: block;

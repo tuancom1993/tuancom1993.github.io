@@ -32,9 +32,21 @@
 		<div class="wrap-menu">
 			<h3 class="title-menu"> Menu</h3>
 			<ul class="menu">
-				<li><a class="menu-active" href="#"> Home </a></li>
-				<li><a href="#"> Services </a></li>
-				<li><a href="#"> Contact</a></li>
+				<li><a  href="#"> Home </a></li>
+				<li><a class="has-sub-menu" href="#"> Services </a>
+					<ul class="sub-menu">
+						<li><a href="#"> Contract 1 </a></li>
+						<li><a href="#"> Contract 2 </a></li>
+						<li><a href="#"> Contract 3 </a></li>
+					</ul>
+				</li>
+				<li><a class="menu-active has-sub-menu" href="#"> Contact</a>
+					<ul class="sub-menu">
+						<li><a href="#"> Contract 1 </a></li>
+						<li><a href="#"> Contract 2 </a></li>
+						<li><a href="#"> Contract 3 </a></li>
+					</ul>
+				</li>
 				<li><a href="#"> About </a></li>
 				<li><a href="#"> Quit </a></li>
 			</ul>
@@ -61,6 +73,23 @@
 			$(this).toggleClass("menu-hiddened");
 			$(".wrap-menu").toggleClass('menu-hidden');
 		});
+
+		$("section.wrap-menu-article div.wrap-menu ul.menu > li > a").click(function(event) {
+			clearClassMenuActive();
+			$(this).toggleClass('menu-active');
+		});
+
+		$("ul.sub-menu li a").click(function(event) {
+			clearClassMenuActive();
+			$(this).toggleClass('sub-menu-active');
+			$(this).parent().parent().parent().find(' > a').toggleClass('menu-active');
+		});
+
+
+		function clearClassMenuActive(){
+			$("ul.menu .menu-active").removeClass('menu-active');
+			$("ul.sub-menu .sub-menu-active").removeClass('sub-menu-active');
+		}
 	});
 </script>
 </html>
