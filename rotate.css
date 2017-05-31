@@ -1,0 +1,126 @@
+.wrap-rotate{
+	margin: 100px;
+	width: 200px;
+	height: 100px;
+	box-sizing: border-box;
+}
+
+.rotate{
+	border-radius: 5px;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	box-shadow: 0 15px 20px -10px rgba(0,0,0,0.4);
+	box-sizing: border-box;
+	position: relative;
+	z-index: 0;
+	
+}
+
+.rotate.roX{
+	animation: rotateX-slice-out 1s ease forwards; 
+}
+.rotate.roY{
+	animation: rotateY-slice-out 1s ease forwards; 
+}
+.rotate.roZ{
+	animation: rotateZ-slice-out 1s ease forwards; 
+}
+
+.slice{
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	padding: 20px;	
+	position: absolute;
+	transition: z-index 0.5s;
+	box-sizing: border-box;
+}
+
+.slice-front{
+	background-color: green;
+	z-index: 1;
+}
+
+.rotate.roY .slice-behind{
+	background-color: orange;
+	transform: rotateY(180deg);
+	z-index: -1;
+}
+.rotate.roX .slice-behind{
+	background-color: orange;
+	transform: rotateX(180deg);
+	z-index: -1;
+}
+.rotate.roZ .slice-behind{
+	background-color: orange;
+	transform: rotateZ(180deg);
+	z-index: -1;
+}
+
+.wrap-rotate:hover > .rotate.roX{
+	animation: rotateX-slice-in 1s ease-out forwards;
+}
+.wrap-rotate:hover > .rotate.roY{
+	animation: rotateY-slice-in 1s ease-out forwards;
+}
+.wrap-rotate:hover > .rotate.roZ{
+	animation: rotateZ-slice-in 1s ease-out forwards;
+}
+
+
+.wrap-rotate:hover > .rotate .slice-front{
+	z-index: -1;
+}
+
+.wrap-rotate:hover > .rotate .slice-behind{
+	z-index: 1;
+}
+
+
+@keyframes rotateY-slice-in {
+	0% { transform: perspective(0px) rotateY(0deg);}
+	20% { transform: perspective(1000px) rotateY(90deg);}
+	50% { transform: perspective(700px) rotateY(200deg);}
+	100% { transform: perspective(0px) rotateY(180deg);}
+}
+
+
+@keyframes rotateY-slice-out {
+	0% { transform: perspective(0px) rotateY(180deg);}
+	20% { transform: perspective(1000px) rotateY(90deg);}
+	50% { transform: perspective(700px) rotateY(-20deg);}
+	100% { transform: perspective(0px) rotateY(0deg);}
+}
+
+
+@keyframes rotateX-slice-in {
+	0% { transform: perspective(0px) rotateX(0deg);}
+	20% { transform: perspective(1000px) rotateX(90deg);}
+	50% { transform: perspective(700px) rotateX(200deg);}
+	100% { transform: perspective(0px) rotateX(180deg); box-shadow: 0 -15px 20px -10px rgba(0,0,0,0.4);}
+}
+
+
+@keyframes rotateX-slice-out {
+	0% { transform: perspective(0px) rotateX(180deg);}
+	20% { transform: perspective(1000px) rotateX(90deg);}
+	50% { transform: perspective(700px) rotateX(-20deg);}
+	100% { transform: perspective(0px) rotateX(0deg)}
+}
+
+@keyframes rotateZ-slice-in {
+	0% { transform: perspective(0px) rotateX(0deg) rotateY(0deg);}
+	20% { transform: perspective(1000px) rotateX(90deg) rotateY(90deg);}
+	50% { transform: perspective(700px) rotateX(200deg) rotateY(200deg); box-shadow: 0 -10px 10px -10px rgba(0,0,0,0.3);}
+	100% { transform: perspective(0px) rotateX(180deg) rotateY(180deg); box-shadow: 0 -15px 20px -10px rgba(0,0,0,0.4);}
+}
+
+
+@keyframes rotateZ-slice-out {
+	0% { transform: perspective(0px) rotateX(180deg) rotateY(180deg);}
+	20% { transform: perspective(1000px) rotateX(90deg) rotateY(90deg);}
+	50% { transform: perspective(700px) rotateX(-20deg) rotateY(-20deg);}
+	100% { transform: perspective(0px) rotateX(0deg) rotateY(0deg);}
+}
