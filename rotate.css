@@ -34,7 +34,7 @@
 	left: 0;
 	padding: 20px;	
 	position: absolute;
-	transition: z-index 0.5s;
+	transition: z-index 0.5s, opacity 0.5s;
 	box-sizing: border-box;
 }
 
@@ -43,20 +43,21 @@
 	z-index: 1;
 }
 
-.rotate.roY .slice-behind{
+.slice-behind{
 	background-color: orange;
-	transform: rotateY(180deg);
 	z-index: -1;
+	opacity: 0;
+}
+
+.rotate.roY .slice-behind{
+	transform: rotateY(180deg);
 }
 .rotate.roX .slice-behind{
-	background-color: orange;
 	transform: rotateX(180deg);
-	z-index: -1;
 }
 .rotate.roZ .slice-behind{
-	background-color: orange;
+
 	transform: rotateZ(180deg);
-	z-index: -1;
 }
 
 .wrap-rotate:hover > .rotate.roX{
@@ -72,10 +73,12 @@
 
 .wrap-rotate:hover > .rotate .slice-front{
 	z-index: -1;
+	opacity: 0;
 }
 
 .wrap-rotate:hover > .rotate .slice-behind{
 	z-index: 1;
+	opacity: 1;
 }
 
 
