@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mã hóa trang HTML</title>
+<style>
+  :root { --primary:#d32f2f; --bg:#f6f6f8; --text:#222; --muted:#666; --card:#fff; --line:#ddd; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+         background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; padding:16px; }
+  form { background:var(--card); width:100%; max-width:440px; padding:28px 24px; border-radius:14px;
+         box-shadow:0 8px 30px rgba(0,0,0,.08); }
+  h1 { margin:0 0 6px; font-size:22px; }
+  p.sub { margin:0 0 20px; font-size:14px; color:var(--muted); }
+  .field { margin-bottom:16px; }
+  .field > span { display:block; font-size:14px; font-weight:600; margin-bottom:6px; }
+  input[type=text], input[type=password], input[type=file] { width:100%; padding:10px 12px; font-size:15px;
+         border:1px solid var(--line); border-radius:8px; background:#fff; }
+  input:focus { outline:2px solid var(--primary); border-color:transparent; }
+  small { display:block; color:var(--muted); font-size:12px; margin-top:4px; }
+  button { width:100%; padding:12px; font-size:16px; font-weight:600; border:0; border-radius:8px;
+           background:var(--primary); color:#fff; cursor:pointer; margin-top:4px; }
+  button:disabled { opacity:.6; cursor:wait; }
+  #msg { font-size:14px; min-height:20px; margin-top:12px; }
+  #msg.err { color:var(--primary); }
+  #msg.ok { color:#2e7d32; }
+</style>
+</head>
+<body>
+<form id="f" autocomplete="off">
+  <h1>Mã hóa trang HTML</h1>
+  <p class="sub">Mọi xử lý diễn ra ngay trong trình duyệt, file không được gửi đi đâu cả.</p>
+
+  <label class="field">
+    <span>File HTML gốc</span>
+    <input id="file" type="file" accept=".html,.htm,text/html" required>
+  </label>
+  <label class="field">
+    <span>Mật khẩu</span>
+    <input id="pw" type="password" required>
+  </label>
+  <label class="field">
+    <span>Tiêu đề trang nhập mật khẩu</span>
+    <input id="title" type="text" placeholder="Lấy từ &lt;title&gt; của file gốc">
+  </label>
+  <label class="field">
+    <span>Tên file tải về</span>
+    <input id="out" type="text" value="index.html">
+    <small>Đẩy file này lên GitHub Pages. Không đẩy file gốc.</small>
+  </label>
+
+  <button id="btn" type="submit">Mã hóa và tải về</button>
+  <div id="msg"></div>
+</form>
+
+<script>
+const ITERATIONS = 600000;
+
+function toB64(u8) {
+  let s = "";
+  for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+function escapeHtml(s) {
+  return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+async function encryptHtml(html, password) {
+  const enc = new TextEncoder();
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const base = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt, iterations: ITERATIONS, hash: "SHA-256" },
+    base, { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
+  const cipher = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(html)));
+  return { s: toB64(salt), i: toB64(iv), c: toB64(cipher), n: ITERATIONS };
+}
+
+// Trang nhập mật khẩu được tạo ra (giống hệt output của encrypt.mjs).
+function buildPage(payload, title) {
+  const t = escapeHtml(title);
+  return `<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>${t}</title>
+<style>
+  :root { --primary:#d32f2f; --bg:#fff5f5; --text:#222; --card:#fff; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+         background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; padding:16px; }
+  form { background:var(--card); width:100%; max-width:360px; padding:28px 24px; border-radius:14px;
+         box-shadow:0 8px 30px rgba(0,0,0,.08); }
+  h1 { margin:0 0 6px; font-size:22px; color:var(--primary); }
+  p { margin:0 0 18px; font-size:14px; color:#666; }
+  input[type=password] { width:100%; padding:12px 14px; font-size:16px; border:1px solid #ddd; border-radius:8px; }
+  input[type=password]:focus { outline:2px solid var(--primary); border-color:transparent; }
+  label { display:flex; gap:8px; align-items:center; margin:12px 0 16px; font-size:14px; color:#555; }
+  button { width:100%; padding:12px; font-size:16px; font-weight:600; border:0; border-radius:8px;
+           background:var(--primary); color:#fff; cursor:pointer; }
+  button:disabled { opacity:.6; cursor:wait; }
+  #err { color:var(--primary); font-size:14px; min-height:20px; margin:10px 0 0; }
+</style>
+</head>
+<body>
+<form id="f" autocomplete="off">
+  <h1>${t}</h1>
+  <p>Nhập mật khẩu để xem trang</p>
+  <input id="pw" type="password" placeholder="Mật khẩu" autofocus required>
+  <label><input id="rm" type="checkbox"> Ghi nhớ trên máy này</label>
+  <button id="btn" type="submit">Mở</button>
+  <div id="err"></div>
+</form>
+<script>
+const P = ${JSON.stringify(payload)};
+const STORE = "enc-key:" + P.s;
+const u8 = (b) => Uint8Array.from(atob(b), (c) => c.charCodeAt(0));
+
+async function deriveRaw(pw) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveBits"]);
+  return new Uint8Array(await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt: u8(P.s), iterations: P.n, hash: "SHA-256" }, base, 256));
+}
+async function decrypt(raw) {
+  const key = await crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]);
+  const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: u8(P.i) }, key, u8(P.c));
+  return new TextDecoder().decode(plain);
+}
+function show(html) { document.open(); document.write(html); document.close(); }
+function load() { try { return localStorage.getItem(STORE); } catch (e) { return null; } }
+function save(raw) { try { localStorage.setItem(STORE, btoa(String.fromCharCode(...raw))); } catch (e) {} }
+function forget() { try { localStorage.removeItem(STORE); } catch (e) {} }
+
+(async () => {
+  const saved = load();
+  if (saved) {
+    try { show(await decrypt(u8(saved))); return; } catch (e) { forget(); }
+  }
+})();
+
+document.getElementById("f").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const btn = document.getElementById("btn"), err = document.getElementById("err");
+  btn.disabled = true; btn.textContent = "Đang mở…"; err.textContent = "";
+  try {
+    const raw = await deriveRaw(document.getElementById("pw").value);
+    const html = await decrypt(raw);
+    if (document.getElementById("rm").checked) save(raw);
+    show(html);
+  } catch (e) {
+    err.textContent = "Sai mật khẩu";
+    btn.disabled = false; btn.textContent = "Mở";
+  }
+});
+<\/script>
+</body>
+</html>
+`;
+}
+
+function download(name, text) {
+  const url = URL.createObjectURL(new Blob([text], { type: "text/html;charset=utf-8" }));
+  const a = Object.assign(document.createElement("a"), { href: url, download: name });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+document.getElementById("f").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const btn = document.getElementById("btn"), msg = document.getElementById("msg");
+  const file = document.getElementById("file").files[0];
+  const pw = document.getElementById("pw").value;
+  if (!file || !pw) return;
+  btn.disabled = true; msg.className = ""; msg.textContent = "Đang mã hóa…";
+  try {
+    const html = await file.text();
+    const original = (html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1];
+    const title = document.getElementById("title").value.trim()
+      || (original && new DOMParser().parseFromString(original, "text/html").body.textContent.trim())
+      || "Trang được bảo vệ";
+    const page = buildPage(await encryptHtml(html, pw), title);
+    const name = document.getElementById("out").value.trim() || "index.html";
+    download(name, page);
+    msg.className = "ok"; msg.textContent = "Đã tạo " + name + " (" + Math.round(page.length / 1024) + " KB).";
+  } catch (e) {
+    msg.className = "err"; msg.textContent = "Lỗi: " + e.message;
+  } finally {
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
