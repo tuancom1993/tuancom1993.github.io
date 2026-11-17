@@ -76,15 +76,18 @@
 			<a href="input-style.html"> See Input Style</a>
 		</div>
 
-	<div id="file-list" style="text-align: center;">Đang tải...</div>
+	<div style="text-align: center;">
+  <button id="btn-load-files" type="button">Hiện danh sách trang</button>
+  <div id="file-list" style="margin-top: 8px;"></div>
+</div>
 
 <script>
-(async function () {
+(function () {
   const OWNER  = 'tuancom1993';
   const REPO   = 'tuancom1993.github.io';
   const BRANCH = 'master';
 
-  // Tuỳ chọn: tên hiển thị đẹp hơn cho từng file. File không có ở đây sẽ hiện theo tên file.
+  // Tuỳ chọn: tên hiển thị riêng cho từng file. File không có ở đây sẽ hiện theo tên file.
   const LABELS = {
     'admin.html': 'Go to Admin site',
     'rotate.html': 'Go to Rotate site',
@@ -95,32 +98,41 @@
   };
   const EXCLUDE = ['index.html'];
 
+  const btn = document.getElementById('btn-load-files');
   const box = document.getElementById('file-list');
-  try {
-    const res = await fetch(
-      `https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`
-    );
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
 
-    const files = data.tree
-      .filter(f => f.type === 'blob'
-                && f.path.toLowerCase().endsWith('.html')
-                && !EXCLUDE.includes(f.path))
-      .map(f => f.path)
-      .sort((a, b) => a.localeCompare(b));
+  btn.addEventListener('click', async function () {
+    btn.disabled = true;
+    box.textContent = 'Đang tải...';
+    try {
+      const res = await fetch(
+        `https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`
+      );
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
 
-    box.textContent = '';
-    files.forEach((path, i) => {
-      if (i > 0) box.append(' | ');
-      const a = document.createElement('a');
-      a.href = path;
-      a.textContent = LABELS[path] || path.split('/').pop().replace(/\.html$/i, '');
-      box.append(a);
-    });
-  } catch (e) {
-    box.textContent = 'Không tải được danh sách file: ' + e.message;
-  }
+      const files = data.tree
+        .filter(f => f.type === 'blob'
+                  && f.path.toLowerCase().endsWith('.html')
+                  && !EXCLUDE.includes(f.path))
+        .map(f => f.path)
+        .sort((a, b) => a.localeCompare(b));
+
+      box.textContent = '';
+      files.forEach((path, i) => {
+        if (i > 0) box.append(' | ');
+        const a = document.createElement('a');
+        a.href = path;
+        a.textContent = LABELS[path] || path.split('/').pop().replace(/\.html$/i, '');
+        box.append(a);
+      });
+      if (files.length === 0) box.textContent = 'Không có file HTML nào.';
+    } catch (e) {
+      box.textContent = 'Không tải được danh sách file: ' + e.message;
+    } finally {
+      btn.disabled = false;
+    }
+  });
 })();
 </script>
 		
